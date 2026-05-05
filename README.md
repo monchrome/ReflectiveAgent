@@ -1,6 +1,6 @@
 # Java → Kotlin Reflective Migration Agent
 
-A CLI tool that converts Java source code to idiomatic Kotlin using a **three-phase reflective agentic pattern** powered by the Claude API.
+A CLI tool that converts Java source code to idiomatic Kotlin using a **three-phase reflective agentic pattern** powered by the Claude API. As of now , because I have expired my Codex tokens , this tool is using the same model for "Reflect and Refinement" step too. Ideally, would prefer two different models to be used for "Generation" and "Reflect and Refinement" step.
 
 ## How It Works
 
