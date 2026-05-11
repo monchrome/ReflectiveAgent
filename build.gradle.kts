@@ -12,6 +12,9 @@ repositories {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 java {
@@ -26,11 +29,20 @@ sourceSets {
             srcDirs("src")
         }
     }
+    test {
+        java {
+            srcDirs("test")
+        }
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.shadowJar {
     manifest {
-        attributes["Main-Class"] = "Main"
+        attributes["Main-Class"] = "com.reflective.Main"
     }
     archiveBaseName.set("reflective-agent")
     archiveClassifier.set("")

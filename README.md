@@ -1,4 +1,4 @@
-# Java → Kotlin Reflective Migration Agent
+can# Java → Kotlin Reflective Migration Agent
 
 A CLI tool that converts Java source code to idiomatic Kotlin using a **three-phase reflective agentic pattern** powered by the Claude API. As of now , because I have expired my Codex tokens , this tool is using the same model for "Reflect and Refinement" step too. Ideally, would prefer two different models to be used for "Generation" and "Reflect and Refinement" step.
 
@@ -75,12 +75,40 @@ The reflection phase checks for:
 
 ## Project Structure
 
+The code is organized into focused modules under `src/com/reflective/`:
+
 ```
-src/
-└── Main.java          # Single-file implementation
-build.gradle.kts       # Gradle build (Java 17, Shadow JAR)
+src/com/reflective/
+├── Main.java                   # Entry point + REPL loop
+├── config/
+│   └── AppConfig.java          # API key, URL, model constants
+├── agent/
+│   ├── MigrationAgent.java     # Orchestrates the 3 reflective phases
+│   └── PromptBuilder.java      # Phase 1 / 2 / 3 prompt templates
+├── api/
+│   └── ClaudeClient.java       # Streaming HTTP client for the Claude API
+├── io/
+│   ├── InputReader.java        # Reads pasted code or a .java file path
+│   └── OutputWriter.java       # Saves Kotlin output, strips code fences
+└── ui/
+    └── ConsoleUI.java          # Banner and phase headers
+
+build.gradle.kts                # Gradle build (Java 17, Shadow JAR)
 settings.gradle.kts
 ```
+
+### Module responsibilities
+
+| Module | Responsibility |
+|--------|----------------|
+| `Main` | Validates config, runs the interactive REPL loop |
+| `config.AppConfig` | Reads `ANTHROPIC_API_KEY` and exposes API constants |
+| `agent.MigrationAgent` | Sequences the Generate → Reflect → Refine phases |
+| `agent.PromptBuilder` | Builds the prompt string for each phase |
+| `api.ClaudeClient` | Posts to `/v1/messages` and streams SSE deltas to stdout |
+| `io.InputReader` | Collects multi-line paste input or reads a `.java` file |
+| `io.OutputWriter` | Prompts the user to save and extracts code from fenced blocks |
+| `ui.ConsoleUI` | Banner, session prompt, and per-phase headers |
 
 ## Dependencies
 
