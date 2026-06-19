@@ -1,4 +1,4 @@
-can# Java → Kotlin Reflective Migration Agent
+# Java → Kotlin Reflective Migration Agent
 
 A CLI agent that converts Java source code to idiomatic Kotlin using a **three-phase reflective agentic pattern** powered by the Claude API.  Ideal way to use this agent is to use different models for "Reflect and Refinement" steps as is required by reflective agentic design pattern. This agent can be invoked from within your Claude CLI.
 
